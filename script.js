@@ -14,10 +14,12 @@ const winningCombos = [
 const cells = document.querySelectorAll('.cell');
 const message = document.getElementById('message');
 
+// Function that gets triggered when a cell is clicked
 function cellClicked(index) {
   if (board[index] === ' ' && !checkWinner()) {
     board[index] = currentPlayer;
     cells[index].textContent = currentPlayer;
+    
     if (checkWinner()) {
       message.textContent = `${currentPlayer} wins!`;
     } else if (board.every(cell => cell !== ' ')) {
@@ -29,10 +31,26 @@ function cellClicked(index) {
   }
 }
 
+// Function to check if a player has won
 function checkWinner() {
   return winningCombos.some(combo => {
     return combo.every(index => {
       return board[index] === currentPlayer;
     });
   });
+}
+
+// Function to reset the game board
+function resetBoard() {
+  // Reset the board array
+  board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  
+  // Clear all cells' text
+  cells.forEach(cell => {
+    cell.textContent = '';
+  });
+  
+  // Reset the message and current player
+  message.textContent = 'Player X\'s turn';
+  currentPlayer = 'X';
 }
